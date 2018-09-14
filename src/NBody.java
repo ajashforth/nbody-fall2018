@@ -1,7 +1,5 @@
-	
-
 /**
- * @author YOUR NAME THE STUDENT IN 201
+ * @author Alec Ashforth
  * 
  * Simulation program for the NBody assignment
  */
@@ -21,13 +19,16 @@ public class NBody {
 	public static double readRadius(String fname) throws FileNotFoundException  {
 		Scanner s = new Scanner(new File(fname));
 	
+		int ignore = s.nextInt();
+		double radius = s.nextDouble();
+		
 		// TODO: read values at beginning of file to
 		// find the radius
 		
 		s.close();
 		
 		// TODO: return radius read
-		return 0;	
+		return radius;	
 	}
 	
 	/**
@@ -42,10 +43,18 @@ public class NBody {
 			Scanner s = new Scanner(new File(fname));
 			
 			// TODO: read # bodies, create array, ignore radius
-			int nb = 0; // # bodies to be read
+			int nb = s.nextInt(); // # bodies to be read
+			double ignore = s.nextDouble();
+			Body[] bodies = new Body[nb];
 			
 			for(int k=0; k < nb; k++) {
-				
+				double xPos = s.nextDouble();
+				double yPos = s.nextDouble();
+				double xVel = s.nextDouble();
+				double yVel = s.nextDouble();
+				double mass = s.nextDouble();
+				String name = s.next();
+				bodies[k] = new Body(xPos, yPos, xVel, yVel, mass, name);
 				// TODO: read data for each body
 				// construct new body object and add to array
 			}
@@ -53,7 +62,7 @@ public class NBody {
 			s.close();
 			
 			// TODO: return array of body objects read
-			return null;
+			return bodies;
 	}
 	public static void main(String[] args) throws FileNotFoundException{
 		double totalTime = 157788000.0;
@@ -68,24 +77,35 @@ public class NBody {
 		
 		Body[] bodies = readBodies(fname);
 		double radius = readRadius(fname);
-		
+		;
 		StdDraw.setScale(-radius, radius);
 		StdDraw.picture(0,0,"images/starfield.jpg");
 	
 		for(double t = 0.0; t < totalTime; t += dt) {
-			
+			double[] xforces = new double[bodies.length];
+			double[] yforces = new double[bodies.length];
 			// TODO: create double arrays xforces and yforces
 			// to hold forces on each body
-			
+
 			// TODO: loop over all bodies, calculate
 			// net forces and store in xforces and yforces
-			
+			for (int i = 0; i < bodies.length; i++) {
+				xforces[i] = bodies[i].calcNetForceExertedByX(bodies);
+			}
+			for (int j = 0; j < bodies.length; j++) {
+				yforces[j] = bodies[j].calcNetForceExertedByY(bodies);
+			}
 			// TODO: loop over all bodies and call update
 			// with dt and corresponding xforces, yforces values
-			
+			for(int k = 0; k < bodies.length; k++) {
+				bodies[k].update(dt, xforces[k],yforces[k]);
+			}
 			StdDraw.picture(0,0,"images/starfield.jpg");
 			
 			// TODO: loop over all bodies and call draw on each one
+			for(int i = 0; i < bodies.length; i++) {
+				bodies[i].draw();
+			}
 			
 			StdDraw.show(10);
 		}
