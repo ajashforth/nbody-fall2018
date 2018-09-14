@@ -177,7 +177,7 @@ public class Body {
 		this.myXPos = nx;
 		this.myYPos = ny;
 		this.myXVel = nvx;
-		this.myYPos = nvy;
+		this.myYVel = nvy;
 	}
 	
 	/**

@@ -98,7 +98,7 @@ public class NBody {
 			// TODO: loop over all bodies and call update
 			// with dt and corresponding xforces, yforces values
 			for(int k = 0; k < bodies.length; k++) {
-				bodies[k].update(dt, xforces[k],yforces[k]);
+				bodies[k].update(dt, xforces[k], yforces[k]);
 			}
 			StdDraw.picture(0,0,"images/starfield.jpg");
 			
