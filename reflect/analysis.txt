@@ -1,5 +1,5 @@
 This is analysis.txt
-Replace this line with your name
+Alec Ashforth
 Replace this line with your netid
 
 Copy/paste the output of your simulation when using planets.txt,
